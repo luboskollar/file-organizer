@@ -1,17 +1,24 @@
+# ===================== IMPORTS =====================
 import os
 import shutil
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 from PIL import Image
 
-
+# ===================== LOGIC =====================
+source_folder = ""
 def get_files():
     files: list[str] = []
     for file in os.listdir(source_folder):
         path = os.path.join(source_folder, file)
         if os.path.isfile(path):
             files.append(path)
-    sorted_list = sorted(files, key=os.path.getmtime)
+    choice = sort_choice.get()
+    if choice == "created":
+        sorted_list = sorted(files, key=os.path.getctime)
+    else:
+        sorted_list = sorted(files, key=os.path.basename)
     return sorted_list
 
 def process_files(sorted_list, new_name, extension=None, copy=False):
@@ -37,6 +44,8 @@ def process_files(sorted_list, new_name, extension=None, copy=False):
             else:
                 os.rename(source_file, new_path)
 
+
+# ===================== GUI CALLBACKS =====================
 def get_folder():
     global source_folder
     source_folder = filedialog.askdirectory()
@@ -44,18 +53,49 @@ def get_folder():
 
 def run():
     files = get_files()
-    process_files(files, new_name="makima", extension="jpg", copy=True)
 
+    copy = copy_var.get()
+    if convert_var.get():
+        extension = "jpg"
+    else:
+        extension = None
+    try:
+        process_files(files, new_name=entry_name.get(), extension=extension, copy=copy)
+        messagebox.showinfo("Success", "Files successfully processed")
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+
+# ===================== GUI SETUP =====================
 window = tk.Tk()
 window.title("Organizer")
 
-label = tk.Label(window, text="Ahoj")
-label.pack()
-
+# ===================== GUI WIDGETS =====================
 button_choose = tk.Button(window, text="Choose folder", command=get_folder)
 button_choose.pack()
 
 button_run = tk.Button(window, text="Run", command=run)
 button_run.pack()
+
+label_name = tk.Label(window, text="Entry name")
+label_name.pack()
+
+entry_name = tk.Entry(window, width=30)
+entry_name.pack()
+
+sort_choice = tk.StringVar(value="created")
+radio_created = tk.Radiobutton(window, text="Created", variable=sort_choice, value="created")
+radio_created.pack()
+
+radio_name = tk.Radiobutton(window, text="Name", variable=sort_choice, value="name")
+radio_name.pack()
+
+copy_var = tk.BooleanVar(value=False)
+check_copy = tk.Checkbutton(window, text="Copy (keep originals)", variable=copy_var)
+check_copy.pack()
+
+convert_var = tk.BooleanVar(value=False)
+check_convert = tk.Checkbutton(window, text="Convert PNG to JPG (this copies files by default)", variable=convert_var)
+check_convert.pack()
 
 window.mainloop()

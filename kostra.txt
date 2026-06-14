@@ -1,0 +1,32 @@
+# ===== KROK 1: Získanie súborov z priečinka =====
+# 1. získaj zoznam mien z priečinka (os.listdir)
+# 2. vytvor prázdny list, kde budú plné cesty súborov (subory = [])
+# 3. pre každé meno z listu mien:
+# 4.     over či je to súbor (treba plnú cestu - os.path.join + os.path.isfile)
+# 5.     ak áno, pridaj plnú cestu do listu zo bodu 2 (append)
+
+
+# ===== KROK 2: Zoradenie súborov =====
+# 1. podľa zvoleného kritéria (dátum vytvorenia / úpravy / názov) zoraď list zo Kroku 1
+#    (sorted() s key=... napr. os.path.getmtime, os.path.getctime, alebo názov)
+
+
+# ===== KROK 3: Vytvorenie nových názvov =====
+# 1. pre každý súbor v zoradenom liste (s číslom poradia - enumerate):
+# 2.     zlož nový názov = prefix + poradové číslo + prípona
+# 3.     ak používateľ chce konvertovať PNG -> JPG a pôvodná prípona je .png,
+#        zmeň príponu na .jpg
+
+
+# ===== KROK 4: Premenovanie alebo kopírovanie =====
+# 1. pre každý súbor s jeho novým názvom:
+# 2.     ak režim = "premenovať" -> os.rename (zmení súbor v zdrojovom priečinku)
+# 3.     ak režim = "kopírovať"  -> shutil.copy (vytvorí kópiu v cieľovom priečinku,
+#        treba zaistiť že cieľový priečinok existuje - os.makedirs)
+
+
+# ===== KROK 5 (neskôr): GUI =====
+# obalíme kroky 1-4 do funkcií a pripojíme na tkinter okno
+# (výber priečinka, textové pole na prefix, radio buttony na výber,
+#  tlačidlo "Spustiť")
+

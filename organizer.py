@@ -31,7 +31,6 @@ def process_files(sorted_list, new_name, extension=None, copy=False):
         new_filename = new_name + str(i) + final_ext
         new_path = os.path.join(source_folder, new_filename)
         if final_ext == ".jpg" and old_ext != ".jpg":
-
             # Real format conversion (e.g. PNG -> JPG) using Pillow.
             # This strips metadata (e.g. AI generation prompts) and recompresses.
             # Original file is always kept, regardless of `copy` parameter.
@@ -44,12 +43,10 @@ def process_files(sorted_list, new_name, extension=None, copy=False):
             else:
                 os.rename(source_file, new_path)
 
-
 # ===================== GUI CALLBACKS =====================
 def get_folder():
     global source_folder
     source_folder = filedialog.askdirectory()
-
     parts = source_folder.split("/")
     if len(parts) > 3:
         display_path = "..." + "/".join(parts[-3:])
@@ -60,7 +57,6 @@ def get_folder():
 
 def run():
     files = get_files()
-
     copy = copy_var.get()
     if convert_var.get():
         extension = "jpg"
@@ -72,15 +68,12 @@ def run():
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
-
 # ===================== GUI SETUP =====================
 window = tk.Tk()
 window.title("Organizer")
-
 # ===================== GUI WIDGETS =====================
 label_path = tk.Label(window, text="No folder selected", width=10, anchor="w")
 label_path.grid(row=0, column=0, columnspan=2, padx=5, pady=5, sticky="we")
-
 
 button_choose = tk.Button(window, text="Choose folder", command=get_folder, width=25)
 button_choose.grid(row=0, column=1, padx=10, pady=5)

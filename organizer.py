@@ -47,6 +47,8 @@ def process_files(sorted_list, new_name, extension=None, copy=False):
 def get_folder():
     global source_folder
     source_folder = filedialog.askdirectory()
+    # Shorten the path for display (full path is too long for the label),
+    # but `source_folder` itself keeps the full path - needed by get_files()/process_files()
     parts = source_folder.split("/")
     if len(parts) > 3:
         display_path = "..." + "/".join(parts[-3:])
@@ -58,6 +60,8 @@ def get_folder():
 def run():
     files = get_files()
     copy = copy_var.get()
+    # Translate the GUI checkbox (bool) into the `extension` parameter
+    # that process_files expects (None = keep original format)
     if convert_var.get():
         extension = "jpg"
     else:

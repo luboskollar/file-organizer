@@ -13,6 +13,7 @@ A simple Python GUI tool for renaming, copying, and converting image files in bu
 ## Download
 
 Download the latest `.exe` from the [Releases page](https://github.com/luboskollar/file-organizer/releases/tag/v1.0) - no Python installation required.
+> **Note:** Windows may show a SmartScreen warning since this is an unsigned executable from an unknown publisher. Click "More info" → "Run anyway" to proceed.
 
 ## Usage
 

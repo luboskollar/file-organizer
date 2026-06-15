@@ -2,8 +2,8 @@
 import os
 import shutil
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
+from tkinter import filedialog, messagebox
+import customtkinter as ctk
 from PIL import Image
 
 # ===================== LOGIC =====================
@@ -53,7 +53,7 @@ def get_folder():
     else:
         display_path = source_folder
 
-    label_path.config(text=display_path)
+    label_path.configure(text=display_path)
 
 def run():
     files = get_files()
@@ -69,40 +69,42 @@ def run():
         messagebox.showerror("Error", str(e))
 
 # ===================== GUI SETUP =====================
-window = tk.Tk()
+window = ctk.CTk()
 window.title("Organizer")
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
 # ===================== GUI WIDGETS =====================
-label_path = tk.Label(window, text="No folder selected", width=10, anchor="w")
+label_path = ctk.CTkLabel(window, text="No folder selected", width=10, anchor="w")
 label_path.grid(row=0, column=0, columnspan=2, padx=5, pady=5, sticky="we")
 
-button_choose = tk.Button(window, text="Choose folder", command=get_folder, width=25)
+button_choose = ctk.CTkButton(window, text="Choose folder", command=get_folder, width=200)
 button_choose.grid(row=0, column=1, padx=10, pady=5)
 
-button_run = tk.Button(window, text="Run", command=run, width=20)
+button_run = ctk.CTkButton(window, text="Run", command=run, width=100)
 button_run.grid(row=5, column=2, sticky="e", padx=5, pady=10)
 
-label_name = tk.Label(window, text="Entry name")
+label_name = ctk.CTkLabel(window, text="Entry name")
 label_name.grid(row=1, column=0, sticky="w", padx=5)
 
-entry_name = tk.Entry(window, width=30)
+entry_name = ctk.CTkEntry(window, width=200)
 entry_name.grid(row=1, column=1, padx=5)
 
-label_sort = tk.Label(window, text="Sort by:")
+label_sort = ctk.CTkLabel(window, text="Sort by:")
 label_sort.grid(row=0, column=2, sticky="w", padx=5)
 
 sort_choice = tk.StringVar(value="created")
-radio_created = tk.Radiobutton(window, text="Created", variable=sort_choice, value="created")
+radio_created = ctk.CTkRadioButton(window, text="Created", variable=sort_choice, value="created")
 radio_created.grid(row=1, column=2, sticky="w", padx=5)
 
-radio_name = tk.Radiobutton(window, text="Name", variable=sort_choice, value="name")
+radio_name = ctk.CTkRadioButton(window, text="Name", variable=sort_choice, value="name")
 radio_name.grid(row=2, column=2, sticky="w", padx=5)
 
 copy_var = tk.BooleanVar(value=False)
-check_copy = tk.Checkbutton(window, text="Copy (keep originals)", variable=copy_var)
+check_copy = ctk.CTkCheckBox(window, text="Copy (keep originals)", variable=copy_var)
 check_copy.grid(row=4, column=0, sticky="w", padx=5)
 
 convert_var = tk.BooleanVar(value=False)
-check_convert = tk.Checkbutton(window, text="Convert PNG to JPG (this copies files by default)", variable=convert_var)
+check_convert = ctk.CTkCheckBox(window, text="Convert PNG to JPG (this copies files by default)", variable=convert_var)
 check_convert.grid(row=4, column=1, sticky="w", padx=5)
 
 window.mainloop()
